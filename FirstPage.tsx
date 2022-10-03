@@ -7,60 +7,28 @@ import { TextInput} from 'react-native-paper';
 const FirstPage = ({ navigation }: any) => {
     const { useState, useRef } = React;
     const [countryName, setCountryName] = useState("")
-    const [minValueErr, setMinValueErr] = useState(true)
 
-    const errorRef = useRef(false)
-   const [title] = useState("submit");
-
-    
     const handleButton = () => {
         navigation.push('Country', { countryName })
     }
 
-    const handleDifference = (value: string) => {
-        if (value.length < 3) {
-            setMinValueErr(true)
-            errorRef.current = true;
-        
-        }
-        else {
-            setMinValueErr(false)
-            errorRef.current = false;
-        }
-        setCountryName(value)
-    }
-    const styles = StyleSheet.create({
-        button: {
-            backgroundColor:"#6600ff", 
-            marginTop:45, 
-            borderRadius:5, 
-            width:100, 
-            justifyContent: "center", 
-            alignSelf: "center"
-        },
-        text: {
-            fontSize: 16,
-            lineHeight: 30,
-            fontWeight: 'bold',
-            letterSpacing: 0.25,
-            color: 'white',
-            left:20
-          },
-      });
-
+   const handleChange=(text:string) => {
+    setCountryName(text)
+   }
+   
     return (
         <View style={{flex: 1, justifyContent: "center", width: "55%", alignSelf: "center"}}>
       <TextInput
       label="Enter Country"
       value={countryName}
-      onChangeText={handleDifference}
+        onChangeText={text =>handleChange(text)}
       mode="outlined"
     
     />
+            <View style={{margin:10,width:150,alignSelf: "center"}}>
+    <Button onPress={handleButton} disabled={!countryName} title="submit" color="blue" />
+    </View>
 
-    <TouchableOpacity style={styles.button} onPress={handleButton}  disabled={minValueErr}>
-    <Text style={styles.text}>{title}</Text>
-    </TouchableOpacity> 
     </View>
     );
 };
